@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#FBF3E7">
+<meta name="color-scheme" content="light">
+<title>For Selin </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FBF3E7;
+    --paper-line:#ECE0CD;
+    --ink:#4A372E;
+    --ink-soft:#8A7363;
+    --rose:#D88C9A;
+    --rose-deep:#C06B7C;
+    --sage:#AFC3A0;
+    --marmalade:#E8A33D;
+    --marmalade-light:#F3C988;
+    --blush:#F7DCE0;
+    --cream-card:#FFFBF4;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{ margin:0; padding:0; }
+
+  body{
+    background-color:var(--paper);
+    background-image: radial-gradient(circle, var(--paper-line) 1px, transparent 1.6px);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Quicksand', sans-serif;
+    overflow-x:hidden;
+  }
+
+  button{ font-family:inherit; }
+
+  .page{
+    position:relative;
+    z-index:1;
+    max-width:680px;
+    margin:0 auto;
+    padding:36px 20px 60px;
+  }
+
+  /* ambient drifting dust */
+  .motes{
+    position:fixed; inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+  }
+  .mote{
+    position:absolute;
+    bottom:-20px;
+    border-radius:50%;
+    opacity:.55;
+    animation-name:drift;
+    animation-timing-function:linear;
+    animation-iteration-count:infinite;
+  }
+  @keyframes drift{
+    to{ transform: translateY(-115vh) translateX(var(--dx,0px)); opacity:0; }
+  }
+
+  /* entrance */
+  .reveal{ animation: fadeUp .7s ease both; }
+  @keyframes fadeUp{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* title */
+  .title-block{
+    position:relative;
+    text-align:center;
+    padding-top:6px;
+    margin-bottom:8px;
+  }
+  .tape{
+    position:absolute;
+    width:92px; height:30px;
+    opacity:.55;
+    z-index:0;
+    box-shadow:0 2px 5px rgba(74,55,46,.12);
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.3) 0 6px, transparent 6px 12px);
+  }
+  .tape-left{ left:4%; top:-4px; background-color:var(--sage); transform:rotate(-8deg); }
+  .tape-right{ right:4%; top:0; background-color:var(--rose); opacity:.5; transform:rotate(7deg); }
+  h1{
+    position:relative; z-index:1;
+    font-family:'Caveat', cursive;
+    font-weight:700;
+    font-size:clamp(2.6rem, 9vw, 4rem);
+    line-height:1;
+    margin:0;
+  }
+  h1 em{
+    font-style:normal;
+    color:var(--rose-deep);
+    text-decoration: underline wavy var(--rose);
+    text-decoration-thickness:2px;
+    text-underline-offset:8px;
+  }
+  .subtitle{
+    position:relative; z-index:1;
+    margin:14px 0 0;
+    color:var(--ink-soft);
+    font-size:1rem;
+  }
+
+  .section-label{
+    text-align:center;
+    text-transform:lowercase;
+    letter-spacing:.03em;
+    color:var(--ink-soft);
+    font-size:.85rem;
+    margin:0 0 16px;
+  }
+  .section-label::before{ content:'🐾'; margin-right:6px; }
+
+  /* sticker sheet */
+  .sticker-sheet{ margin:46px 0 26px; }
+  .sticker-row{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:18px;
+    padding:8px 4px 4px;
+  }
+  .sticker{
+    width:84px; height:84px;
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+    position:relative;
+    transform: rotate(var(--rot,0deg));
+    transition: transform .25s ease;
+  }
+  .sticker:hover,
+  .sticker:focus-visible{
+    transform: translateY(-4px) scale(1.05) rotate(var(--rot,0deg));
+  }
+  .sticker.active{
+    transform: translateY(-10px) scale(1.1) rotate(calc(var(--rot,0deg) + 6deg));
+    z-index:2;
+  }
+  .sticker:focus-visible{
+    outline:3px solid var(--marmalade);
+    outline-offset:5px;
+    border-radius:50%;
+  }
+
+  .cat-face{
+    display:block;
+    width:100%; height:100%;
+    border-radius:50%;
+    background:var(--fur, var(--blush));
+    border:3px solid #fff;
+    position:relative;
+    box-shadow:0 6px 10px rgba(74,55,46,.18), inset 0 -6px 10px rgba(0,0,0,.05);
+  }
+  .cat-face::before,
+  .cat-face::after{
+    content:'';
+    position:absolute;
+    top:-12px;
+    width:0; height:0;
+    border-left:14px solid transparent;
+    border-right:14px solid transparent;
+    border-bottom:20px solid var(--fur, var(--blush));
+  }
+  .cat-face::before{ left:6px; transform:rotate(-25deg); }
+  .cat-face::after{ right:6px; transform:rotate(25deg); }
+  .cat-face .blush{
+    position:absolute;
+    width:10px; height:7px;
+    border-radius:50%;
+    background:rgba(192,107,124,.45);
+    bottom:20px;
+  }
+  .cat-face .blush.l{ left:10px; }
+  .cat-face .blush.r{ right:10px; }
+  .cat-face .kao{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:1.05rem;
+    color:var(--ink);
+  }
+
+  .note-panel{
+    max-width:480px;
+    margin:6px auto 0;
+    min-height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:var(--cream-card);
+    border:1px solid var(--paper-line);
+    border-radius:18px;
+    padding:16px 22px;
+    font-family:'Caveat', cursive;
+    font-size:1.35rem;
+    color:var(--ink);
+    box-shadow:0 4px 14px rgba(74,55,46,.12);
+  }
+
+  /* cat corner */
+  .cat-corner{ text-align:center; margin:54px 0; }
+  .loaf-wrap{ position:relative; display:inline-block; margin-top:8px; }
+  .loaf-cat{
+    width:230px; height:185px;
+    border:none; background:none; padding:0;
+    position:relative;
+    cursor:pointer;
+    display:block; margin:0 auto;
+  }
+  .loaf-cat:focus-visible{
+    outline:3px solid var(--marmalade);
+    outline-offset:6px;
+    border-radius:40%;
+  }
+  .loaf-body{
+    position:absolute;
+    bottom:0; left:50%;
+    width:200px; height:120px;
+    transform:translateX(-50%);
+    background:var(--fur, var(--marmalade));
+    border-radius:50% 50% 46% 46% / 65% 65% 35% 35%;
+    box-shadow:0 10px 18px rgba(74,55,46,.2), inset 0 -14px 18px rgba(0,0,0,.08);
+  }
+  .loaf-paw{
+    position:absolute;
+    bottom:6px;
+    width:32px; height:16px;
+    border-radius:50%;
+    background:var(--furlight, var(--marmalade-light));
+  }
+  .loaf-paw.l{ left:36px; }
+  .loaf-paw.r{ right:36px; }
+  .loaf-tail{
+    position:absolute;
+    bottom:28px; right:-2px;
+    width:62px; height:22px;
+    background:var(--fur, var(--marmalade));
+    border-radius:50px;
+    transform-origin:left center;
+    transform:rotate(34deg);
+    animation: wag 2.6s ease-in-out infinite alternate;
+  }
+  @keyframes wag{
+    from{ transform:rotate(28deg); }
+    to{ transform:rotate(42deg); }
+  }
+  .cat-face.loaf-head{
+    position:absolute;
+    top:-6px; left:50%;
+    width:104px; height:104px;
+    transform:translateX(-50%);
+  }
+  .cat-face.loaf-head .kao{ font-size:1.6rem; }
+
+  .purr-meter{
+    margin-top:16px;
+    font-weight:600;
+    color:var(--ink-soft);
+    font-size:.95rem;
+  }
+  #petCount{ color:var(--rose-deep); font-weight:700; }
+  .purr-float{
+    position:absolute;
+    top:22%;
+    font-family:'Caveat', cursive;
+    font-size:1.1rem;
+    color:var(--rose-deep);
+    pointer-events:none;
+    white-space:nowrap;
+  }
+
+  /* stamp corner */
+  .stamp-corner{ text-align:center; margin:54px 0 30px; }
+  .stamp-btn{
+    border:none;
+    background:var(--rose);
+    color:#fff;
+    font-weight:700;
+    font-size:1rem;
+    padding:14px 28px;
+    border-radius:999px;
+    cursor:pointer;
+    box-shadow:0 6px 14px rgba(192,107,124,.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .stamp-btn:hover{ transform:translateY(-2px); box-shadow:0 8px 18px rgba(192,107,124,.4); }
+  .stamp-btn:active{ transform:translateY(0) scale(.98); }
+  .stamp-btn:focus-visible{ outline:3px solid var(--marmalade); outline-offset:3px; }
+  .stamp-card{
+    max-width:460px;
+    margin:20px auto 0;
+    background:var(--cream-card);
+    border:1px dashed var(--rose);
+    border-radius:16px;
+    padding:18px 22px;
+    font-family:'Caveat', cursive;
+    font-size:1.3rem;
+    color:var(--ink);
+    box-shadow:0 4px 12px rgba(74,55,46,.1);
+  }
+
+  .sign-off{
+    text-align:center;
+    margin-top:52px;
+    color:var(--ink-soft);
+    font-size:.95rem;
+  }
+  .signature{
+    font-family:'Caveat', cursive;
+    font-size:1.7rem;
+    color:var(--rose-deep);
+    margin:4px 0 10px;
+  }
+  .subtext{ font-size:.8rem; opacity:.75; }
+
+  @media (prefers-reduced-motion: reduce){
+    .mote{ display:none; }
+    .loaf-tail{ animation:none; }
+    .reveal{ animation:none; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="motes" id="motes" aria-hidden="true"></div>
+
+<div class="page">
+
+  <header class="title-block reveal" style="animation-delay:0s">
+    <span class="tape tape-left"></span>
+    <span class="tape tape-right"></span>
+    <h1>For <em>Selin</em></h1>
+    <p class="subtitle">Vaccum</p>
+  </header>
+
+  <section class="sticker-sheet reveal" style="animation-delay:.12s" aria-label="Sticker notes">
+    <p class="section-label">tap a sticker</p>
+
+    <div class="sticker-row" id="stickerRow">
+
+      <button type="button" class="sticker" style="--fur:#F7DCE0; --rot:-8deg" data-note="i really dont know how to thank you you are an amazing person"">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">≧v≦</span></span>
+      </button>
+
+      <button type="button" class="sticker" style="--fur:#E3E8D6; --rot:6deg" data-note="if i could have done something better i would but this is my limit">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">>0<</span></span>
+      </button>
+
+      <button type="button" class="sticker" style="--fur:#D9D2C5; --rot:-5deg" data-note="You are such a wonderful person and you helped me so much in my rough times i really cant thank you enough">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">• v •</span></span>
+      </button>
+
+      <button type="button" class="sticker" style="--fur:#F0C29B; --rot:9deg" data-note="I wish we could stay with each other forever">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">-_-</span></span>
+      </button>
+
+      <button type="button" class="sticker" style="--fur:#DCC2CE; --rot:-9deg" data-note="Im always here for you selin no matter what it is we will stay together forever"">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">- U -</span></span>
+      </button>
+
+      <button type="button" class="sticker" style="--fur:#F2E2A8; --rot:5deg" data-note="Okay i got nothing else to say">
+        <span class="cat-face"><span class="blush l"></span><span class="blush r"></span><span class="kao">^_^</span></span>
+      </button>
+
+    </div>
+
+    <p class="note-panel" id="notePanel" aria-live="polite">tap any sticker above to peek underneath ✦</p>
+  </section>
+
+  <section class="cat-corner reveal" style="animation-delay:.24s" aria-label="Pet the cat">
+    <p class="section-label">pet the loaf</p>
+    <div class="loaf-wrap">
+      <button type="button" class="loaf-cat" id="loafCat" aria-label="Pet the cat" style="--fur:#E8A33D; --furlight:#F3C988">
+        <span class="loaf-tail"></span>
+        <span class="loaf-body">
+          <span class="loaf-paw l"></span>
+          <span class="loaf-paw r"></span>
+        </span>
+        <span class="cat-face loaf-head"><span class="blush l"></span><span class="blush r"></span><span class="kao">• v •</span></span>
+      </button>
+    </div>
+    <p class="purr-meter">pets: <span id="petCount">0</span> 🤍</p>
+  </section>
+
+  <section class="stamp-corner reveal" style="animation-delay:.36s" aria-label="A little reason to smile">
+    <button type="button" class="stamp-btn" id="stampBtn">press</button>
+    <p class="stamp-card" id="stampCard" aria-live="polite">thank you selin✦</p>
+  </section>
+
+  <footer class="sign-off reveal" style="animation-delay:.48s">
+    <p>by me moha hello</p>
+    <p class="signature">— Moha</p>
+    <p class="subtext">(Yes)</p>
+  </footer>
+
+</div>
+
+<script>
+  var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ambient drifting dust
+  if(!prefersReduced){
+    var motesContainer = document.getElementById('motes');
+    for(var i=0;i<9;i++){
+      var m = document.createElement('span');
+      m.className = 'mote';
+      var size = 4 + Math.random()*4;
+      m.style.width = size+'px';
+      m.style.height = size+'px';
+      m.style.left = (Math.random()*100)+'%';
+      m.style.setProperty('--dx', (Math.random()*60-30)+'px');
+      var dur = 16 + Math.random()*14;
+      m.style.animationDuration = dur+'s';
+      m.style.animationDelay = (-Math.random()*dur)+'s';
+      m.style.background = (i % 2 === 0) ? 'var(--rose)' : 'var(--sage)';
+      motesContainer.appendChild(m);
+    }
+  }
+
+  // sticker notes
+  var stickerRow = document.getElementById('stickerRow');
+  var notePanel = document.getElementById('notePanel');
+  var PLACEHOLDER = notePanel.textContent;
+
+  function setPanel(text){
+    notePanel.textContent = text;
+    notePanel.animate(
+      [{ transform:'scale(.96)', opacity:.5 }, { transform:'scale(1)', opacity:1 }],
+      { duration:260, easing:'ease-out' }
+    );
+  }
+
+  stickerRow.addEventListener('click', function(e){
+    var btn = e.target.closest('.sticker');
+    if(!btn) return;
+    var wasActive = btn.classList.contains('active');
+    var allStickers = stickerRow.querySelectorAll('.sticker.active');
+    for(var i=0;i<allStickers.length;i++){ allStickers[i].classList.remove('active'); }
+    if(wasActive){
+      setPanel(PLACEHOLDER);
+    } else {
+      btn.classList.add('active');
+      setPanel(btn.dataset.note);
+    }
+  });
+
+  // loaf cat petting
+  var loafBtn = document.getElementById('loafCat');
+  var loafBody = loafBtn.querySelector('.loaf-body');
+  var loafWrap = document.querySelector('.loaf-wrap');
+  var petCountEl = document.getElementById('petCount');
+  var purrPhrases = ['purrrr~','mrrp!','*happy cat noises*','prrrp','mlem','content little rumble~'];
+  var petCount = 0;
+
+  loafBtn.addEventListener('click', function(){
+    petCount++;
+    petCountEl.textContent = petCount;
+
+    loafBody.animate([
+      { transform:'translateX(-50%) scaleY(1) scaleX(1)' },
+      { transform:'translateX(-50%) scaleY(.88) scaleX(1.05)' },
+      { transform:'translateX(-50%) scaleY(1) scaleX(1)' }
+    ], { duration:260, easing:'ease-in-out' });
+
+    var phrase = purrPhrases[Math.floor(Math.random()*purrPhrases.length)];
+    var el = document.createElement('span');
+    el.className = 'purr-float';
+    el.textContent = phrase;
+    el.style.left = (40 + Math.random()*18) + '%';
+    loafWrap.appendChild(el);
+
+    var anim = el.animate([
+      { opacity:0, transform:'translateY(0) scale(.9)' },
+      { opacity:1, transform:'translateY(-6px) scale(1)', offset:.2 },
+      { opacity:0, transform:'translateY(-46px) scale(1.05)' }
+    ], { duration:1200, easing:'ease-out' });
+    anim.onfinish = function(){ el.remove(); };
+  });
+
+  // gentle blink
+  if(!prefersReduced){
+    var loafKao = loafBtn.querySelector('.loaf-head .kao');
+    var OPEN_FACE = loafKao.textContent;
+    var BLINK_FACE = '- o -';
+    setInterval(function(){
+      loafKao.textContent = BLINK_FACE;
+      setTimeout(function(){ loafKao.textContent = OPEN_FACE; }, 180);
+    }, 4200);
+  }
+
+  // stamp messages
+  var stampMessages = [
+    "Youre cute",
+    "Im proud of you",
+    "I love you.",
+    "I love you more",
+    "You are beautifulll",
+    "Selin yummy nummy in my tummy",
+    "I love your voice",
+    "You smartie pantie",
+    "Selina ballerina",
+    "You fell asleep while im making this"
+  ];
+  var stampBtn = document.getElementById('stampBtn');
+  var stampCard = document.getElementById('stampCard');
+  var lastIdx = -1;
+
+  stampBtn.addEventListener('click', function(){
+    var idx;
+    if(stampMessages.length === 1){
+      idx = 0;
+    } else {
+      do { idx = Math.floor(Math.random()*stampMessages.length); } while(idx === lastIdx);
+    }
+    lastIdx = idx;
+
+    var fadeOut = stampCard.animate([{ opacity:1 },{ opacity:0 }], { duration:140, easing:'ease-in' });
+    fadeOut.onfinish = function(){
+      stampCard.textContent = stampMessages[idx];
+      stampCard.animate(
+        [{ opacity:0, transform:'translateY(6px)' }, { opacity:1, transform:'translateY(0)' }],
+        { duration:240, easing:'ease-out' }
+      );
+    };
+  });
+</script>
+
+</body>
+</html>
